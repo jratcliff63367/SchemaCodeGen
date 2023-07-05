@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(bitcoinstats)
+project(SchemaCodeGen)
 
 #
 # common directories
 #
 
-set(bitcoinstats_ROOT        ${PROJECT_SOURCE_DIR})
-set(bitcoinstats_EXT_ROOT    ${bitcoinstats_ROOT}/ext)
+set(SchemaCodeGen_ROOT        ${PROJECT_SOURCE_DIR})
+set(SchemaCodeGen_EXT_ROOT    ${SchemaCodeGen_ROOT}/ext)
 
 
 if (WIN32)
-set(extra_INCLUDE    ${bitcoinstats_ROOT}/ext)
+set(extra_INCLUDE    ${SchemaCodeGen_ROOT}/ext)
 else()
-set(extra_INCLUDE    ${bitcoinstats_ROOT}/ext)
+set(extra_INCLUDE    ${SchemaCodeGen_ROOT}/ext)
 endif()
 
 #
@@ -86,23 +86,10 @@ file (GLOB_RECURSE leveldb_EXTERNAL_SOURCES
     RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     include/*.h
     src/*.cpp
-    include/leveldb/*.h
-    include /snappy/*.h
-    src/leveldb/util/*.h
-    src/leveldb/util/*.cc
-    src/leveldb/db/*.h
-    src/leveldb/db/*.cc
-    src/leveldb/table/*.h
-    src/leveldb/table/*.cc
-    src/leveldb/port/*.h
-    src/leveldb/port/*.cc
-    src/snappy/config.h
-    src/snappy/snappy-c.cc
-    src/snappy/snappy-internal.h
-    src/snappy/snappy-sinksource.cc
-    src/snappy/src/snappy/snappy-stubs-internal.cc
-    src/snappy/snappy-stubs-internal.h
-    src/snappy/snappy.cc
+    include/rapidjson/*.h
+    include/rapidjson/error/*.h
+    include/rapidjson/internal/*.h
+    include/rapidjson/msinttypes/*.h
 )
 
 
@@ -118,14 +105,14 @@ set(Platform_SOURCES
 )
 endif()
 
-set(bitcoinstats_SOURCES
+set(SchemaCodeGen_SOURCES
 	app/main.cpp
 )
 
-#message("External sources:\n${bitcoinstats_EXTERNAL_SOURCES}")
+#message("External sources:\n${SchemaCodeGen_EXTERNAL_SOURCES}")
 
 # deal with subdirectories in external sources
-foreach(source IN LISTS bitcoinstats_EXTERNAL_SOURCES)
+foreach(source IN LISTS SchemaCodeGen_EXTERNAL_SOURCES)
     get_filename_component(source_path "${source}" PATH)
     string(REPLACE "/" "\\" source_path_msvc "${source_path}")
     source_group("${source_path_msvc}" FILES "${source}")
@@ -141,7 +128,7 @@ foreach(source IN LISTS leveldb_EXTERNAL_SOURCES)
 endforeach()
 
 # deal with subdirectories in sources
-foreach(source IN LISTS bitcoinstats_SOURCES)
+foreach(source IN LISTS SchemaCodeGen_SOURCES)
     get_filename_component(source_path "${source}" PATH)
     string(REPLACE "/" "\\" source_path_msvc "${source_path}")
     source_group("${source_path_msvc}" FILES "${source}")
@@ -151,44 +138,42 @@ endforeach()
 # executable target
 #
 
-add_executable(bitcoinstats
-    ${bitcoinstats_EXTERNAL_SOURCES}
+add_executable(SchemaCodeGen
+    ${SchemaCodeGen_EXTERNAL_SOURCES}
     ${leveldb_EXTERNAL_SOURCES}
-    ${bitcoinstats_SOURCES}
+    ${SchemaCodeGen_SOURCES}
     ${Platform_SOURCES}
     ${Shared_SOURCES}
 )
 
-target_include_directories(bitcoinstats PUBLIC
-    ${bitcoinstats_EXT_ROOT}
-    ${bitcoinstats_EXT_ROOT}/bitcoinstats
-    ${bitcoinstats_ROOT}/include
-    ${bitcoinstats_ROOT}/include/snappy
-    ${bitcoinstats_ROOT}/src/leveldb
-    ${bitcoinstats_ROOT}/src/snappy
+target_include_directories(SchemaCodeGen PUBLIC
+    ${SchemaCodeGen_EXT_ROOT}
+    ${SchemaCodeGen_EXT_ROOT}/SchemaCodeGen
+    ${SchemaCodeGen_ROOT}/include
+    ${SchemaCodeGen_ROOT}/include/rapidjson
     ${extra_INCLUDE}
 )
 
 if (WIN32)
-    target_link_libraries(bitcoinstats
+    target_link_libraries(SchemaCodeGen
     )
 else()
-    target_link_libraries(bitcoinstats
+    target_link_libraries(SchemaCodeGen
         -ldl
         -lpthread
     )
 endif()
 
 
-set(bitcoinstats_BIN_DIR ${bitcoinstats_ROOT}/bin)
-if (bitcoinstats_BUILD_PLATFORM)
-    set(bitcoinstats_BIN_DIR ${bitcoinstats_BIN_DIR}/${bitcoinstats_BUILD_PLATFORM})
+set(SchemaCodeGen_BIN_DIR ${SchemaCodeGen_ROOT}/bin)
+if (SchemaCodeGen_BUILD_PLATFORM)
+    set(SchemaCodeGen_BIN_DIR ${SchemaCodeGen_BIN_DIR}/${SchemaCodeGen_BUILD_PLATFORM})
 endif()
 if (CMAKE_BUILD_TYPE)
-    set(bitcoinstats_BIN_DIR ${bitcoinstats_BIN_DIR}/${CMAKE_BUILD_TYPE})
+    set(SchemaCodeGen_BIN_DIR ${SchemaCodeGen_BIN_DIR}/${CMAKE_BUILD_TYPE})
 endif()
 
-set_target_properties(bitcoinstats
+set_target_properties(SchemaCodeGen
     PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${bitcoinstats_BIN_DIR}
+    RUNTIME_OUTPUT_DIRECTORY ${SchemaCodeGen_BIN_DIR}
 )

@@ -65,3 +65,15 @@
 /*.bak
 /bitcoinstats.dir/Debug
 /bitcoinstats.dir/Release
+/.vs/SchemaCodeGen/v16
+/ALL_BUILD.vcxproj
+/ALL_BUILD.vcxproj.filters
+/CMakeFiles/34a82eadf971683af73cefd61c86eec4/generate.stamp.rule
+/SchemaCodeGen.dir/Debug
+/SchemaCodeGen.dir/Release
+/SchemaCodeGen.sln
+/SchemaCodeGen.vcxproj
+/SchemaCodeGen.vcxproj.filters
+/SchemaCodeGen.vcxproj.user
+/ZERO_CHECK.vcxproj
+/ZERO_CHECK.vcxproj.filters

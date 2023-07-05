@@ -1,8 +1,8 @@
-# Install script for directory: D:/github/bitcoinstats
+# Install script for directory: D:/github/SchemaCodeGen
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/bitcoinstats")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/SchemaCodeGen")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/github/bitcoinstats/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/github/SchemaCodeGen/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

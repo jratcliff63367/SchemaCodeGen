@@ -24,7 +24,7 @@
 
 #ifdef _MSC_VER
 #include <direct.h>
-#pragma warning(disable:4996)
+#pragma warning(disable:4996 4100 4189)
 #else
 #include <unistd.h>
 #include <dirent.h>
