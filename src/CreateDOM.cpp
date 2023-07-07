@@ -147,7 +147,8 @@ namespace CREATE_DOM
                 ret = "GetUint64";
                 break;
             case CREATE_DOM::StandardType::u32:
-                ret = "GetUint32";
+//                ret = "GetUint32";
+                ret = "GetUint";
                 break;
             case CREATE_DOM::StandardType::u16:
                 ret = "GetUint16";
