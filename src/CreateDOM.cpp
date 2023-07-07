@@ -130,6 +130,7 @@ namespace CREATE_DOM
         i16,
         i8,
         float_type,
+        double_type,
         bool_type,
         string_type,
     };
@@ -170,6 +171,10 @@ namespace CREATE_DOM
                 break;
             case CREATE_DOM::StandardType::float_type:
                 ret = "GetFloat";
+                isNumeric = false;
+                break;
+            case CREATE_DOM::StandardType::double_type:
+                ret = "GetDouble";
                 isNumeric = false;
                 break;
             case CREATE_DOM::StandardType::bool_type:
@@ -226,6 +231,10 @@ namespace CREATE_DOM
         else if ( strcmp(type, "float") == 0 )
         {
             ret = StandardType::float_type;
+        }
+        else if ( strcmp(type, "double") == 0 )
+        {
+            ret = StandardType::double_type;
         }
         else if ( strcmp(type, "bool") == 0)
         {
@@ -790,6 +799,7 @@ public:
              strcmp(type, "i16") == 0 ||
              strcmp(type, "i8") == 0 ||
             strcmp(type, "float") == 0 ||
+            strcmp(type, "double") == 0 ||
             strcmp(type, "bool") == 0 )
         {
             ret = true;
@@ -965,6 +975,10 @@ public:
                             checkName = "IsFloat";
                             getName = "GetFloat";
                             break;
+                        case StandardType::double_type:
+                            checkName = "IsDouble";
+                            getName = "GetDouble";
+                            break;
                         case StandardType::string_type:
                             checkName = "IsString";
                             getName = "GetString";
@@ -1007,6 +1021,13 @@ public:
                             cpimpl.printCode(3, "else if ( v.IsNumber() )\n");
                             cpimpl.printCode(3,"{\n");
                             cpimpl.printCode(4, "r.%s = float(v.GetUint64());\n", i.mMember.c_str(), getType);
+                            cpimpl.printCode(3,"}\n");
+                        }
+                        if( type == StandardType::double_type )
+                        {
+                            cpimpl.printCode(3, "else if ( v.IsNumber() )\n");
+                            cpimpl.printCode(3,"{\n");
+                            cpimpl.printCode(4, "r.%s = double(v.GetUint64());\n", i.mMember.c_str(), getType);
                             cpimpl.printCode(3,"}\n");
                         }
                         cpimpl.printCode(3,"else\n");
@@ -1412,8 +1433,6 @@ public:
                     }
                     else
                     {
-
-
                         cpimpl.printCode(1,"{\n");
                         cpimpl.printCode(1,"    rapidjson::Value varray(rapidjson::kArrayType);\n");
                         cpimpl.printCode(1,"    for (auto &i : type.%s)\n",i.mMember.c_str());
